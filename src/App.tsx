@@ -1,5 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-const App: React.FC = () => <h1>PebMed WEB</h1>;
+import GlobalStyles from './styles/global';
+import Routes from './routes';
+
+const App: React.FC = () => (
+  <Router>
+    <Routes />
+    <GlobalStyles />
+  </Router>
+);
 
 export default App;
