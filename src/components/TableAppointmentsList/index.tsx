@@ -22,7 +22,7 @@ const TableAppointmentsList: React.FC<TableAppointmentsListProps> = ({ headers, 
       <thead>
         <tr>
           {headers.map((item: string) => (
-            <th>{item}</th>
+            <th key={item}>{item}</th>
           ))}
         </tr>
       </thead>

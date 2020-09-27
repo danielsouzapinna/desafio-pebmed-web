@@ -20,7 +20,7 @@ const TablePatientsList: React.FC<TablePatientsListProps> = ({ headers, rows }: 
       <thead>
         <tr>
           {headers.map((item: string) => (
-            <th>{item}</th>
+            <th key={item}>{item}</th>
           ))}
         </tr>
       </thead>

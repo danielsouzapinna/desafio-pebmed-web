@@ -19,7 +19,7 @@ const Appointments: React.FC = () => {
       },
     },
     {
-      id: '1',
+      id: '3',
       date: '99/99/9999',
       patient: {
         name: 'José',
