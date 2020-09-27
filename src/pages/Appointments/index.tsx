@@ -1,4 +1,8 @@
 import React from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+
 import TableAppointmentsList from '../../components/TableAppointmentsList';
 
 const Appointments: React.FC = () => {
@@ -29,7 +33,16 @@ const Appointments: React.FC = () => {
 
   return (
     <>
-      <h1>Agendamentos</h1>
+      <Row className="d-flex align-items-center my-3">
+        <Col>
+          <h1>Agendamentos</h1>
+        </Col>
+        <Col>
+          <Button variant="outline-secondary" className="float-right">
+            Novo Agendamento
+          </Button>
+        </Col>
+      </Row>
       <TableAppointmentsList headers={labels} rows={values} />
     </>
   );
