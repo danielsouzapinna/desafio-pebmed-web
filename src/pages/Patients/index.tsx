@@ -2,8 +2,9 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
-import TablePatientsList from '../../components/TablePatientsList';
+import TablePatients from '../../components/TablePatients';
 
 const Patients: React.FC = () => {
   const labels = ['Nome', 'Data Nascimento', 'Sexo', 'Telefone'];
@@ -20,12 +21,12 @@ const Patients: React.FC = () => {
           <h1>Pacientes</h1>
         </Col>
         <Col>
-          <Button variant="outline-secondary" className="float-right">
+          <Button as={Link} to="/add-patient" variant="outline-secondary" className="float-right">
             Novo Paciente
           </Button>
         </Col>
       </Row>
-      <TablePatientsList headers={labels} rows={values} />
+      <TablePatients headers={labels} rows={values} />
     </>
   );
 };

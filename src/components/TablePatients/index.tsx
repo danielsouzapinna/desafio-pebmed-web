@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
 
 interface Patient {
   id: string;
@@ -9,12 +10,12 @@ interface Patient {
   phone: string;
 }
 
-interface TablePatientsListProps {
+interface TablePatientsProps {
   headers: string[];
   rows: Patient[];
 }
 
-const TablePatientsList: React.FC<TablePatientsListProps> = ({ headers, rows }: TablePatientsListProps) => {
+const TablePatients: React.FC<TablePatientsProps> = ({ headers, rows }: TablePatientsProps) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -27,7 +28,9 @@ const TablePatientsList: React.FC<TablePatientsListProps> = ({ headers, rows }: 
       <tbody>
         {rows.map((item: Patient) => (
           <tr key={item.id}>
-            <td>{item.name}</td>
+            <td>
+              <Link to="/patient-detail">{item.name}</Link>
+            </td>
             <td>{item.dateBirth}</td>
             <td>{item.gender}</td>
             <td>{item.phone}</td>
@@ -38,4 +41,4 @@ const TablePatientsList: React.FC<TablePatientsListProps> = ({ headers, rows }: 
   );
 };
 
-export default TablePatientsList;
+export default TablePatients;
