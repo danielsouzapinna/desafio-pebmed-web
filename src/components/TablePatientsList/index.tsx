@@ -2,6 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 
 interface Patient {
+  id: string;
   name: string;
   dateBirth: string;
   gender: string;
@@ -25,7 +26,7 @@ const TablePatientsList: React.FC<TablePatientsListProps> = ({ headers, rows }: 
       </thead>
       <tbody>
         {rows.map((item: Patient) => (
-          <tr>
+          <tr key={item.id}>
             <td>{item.name}</td>
             <td>{item.dateBirth}</td>
             <td>{item.gender}</td>
