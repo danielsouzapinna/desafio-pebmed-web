@@ -18,7 +18,7 @@ const Menu: React.FC = () => {
           <Nav.Link as={Link} to="/patients">
             Pacientes
           </Nav.Link>
-          <Nav.Link as={Link} to="/aapointments">
+          <Nav.Link as={Link} to="/appointments">
             Agendamentos
           </Nav.Link>
         </Nav>
