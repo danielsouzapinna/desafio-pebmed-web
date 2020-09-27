@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import TableAppointmentsList from '../../components/TableAppointmentsList';
+import TableAppointments from '../../components/TableAppointments';
 
 const Appointments: React.FC = () => {
   const labels = ['Paciente', 'Data'];
@@ -43,7 +43,7 @@ const Appointments: React.FC = () => {
           </Button>
         </Col>
       </Row>
-      <TableAppointmentsList headers={labels} rows={values} />
+      <TableAppointments headers={labels} rows={values} />
     </>
   );
 };

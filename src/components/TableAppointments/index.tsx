@@ -11,12 +11,12 @@ interface Appointment {
   patient: PatientDetail;
 }
 
-interface TableAppointmentsListProps {
+interface TableAppointmentsProps {
   headers: string[];
   rows: Appointment[];
 }
 
-const TableAppointmentsList: React.FC<TableAppointmentsListProps> = ({ headers, rows }: TableAppointmentsListProps) => {
+const TableAppointments: React.FC<TableAppointmentsProps> = ({ headers, rows }: TableAppointmentsProps) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -38,4 +38,4 @@ const TableAppointmentsList: React.FC<TableAppointmentsListProps> = ({ headers, 
   );
 };
 
-export default TableAppointmentsList;
+export default TableAppointments;
