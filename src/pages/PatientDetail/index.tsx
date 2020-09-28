@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -14,8 +15,8 @@ const PatientDetail: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const labels = ['Data', 'Atendimento'];
-  const values = [
+  let headers: Array<string> = ['Data', 'Atendimento'];
+  let rows = [
     {
       id: '1',
       date: '99/99/9999',
@@ -60,15 +61,15 @@ const PatientDetail: React.FC = () => {
         </Col>
       </Row>
 
-      <PatientInformation />
+      {/* <PatientInformation /> */}
 
       <ButtonGroup className="mb-4">
         <Button variant="outline-secondary">Inserir Anotações</Button>
       </ButtonGroup>
 
-      <TableAppointmentsPatient headers={labels} rows={values} />
+      <TableAppointmentsPatient headers={headers} rows={rows} />
 
-      <ModalPatient show={show} title="Excluir Paciente" text="Tem certeza que deseja excluir o paciente" handleClose={handleClose} />
+      <ModalPatient show title="Excluir Paciente" text="Tem certeza que deseja excluir o paciente" handleClose={handleClose} />
     </>
   );
 };

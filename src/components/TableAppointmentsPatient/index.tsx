@@ -13,7 +13,7 @@ interface Appointment {
 }
 
 interface TableAppointmentsPatientProps {
-  headers: string[];
+  headers: Array<string>;
   rows: Appointment[];
 }
 
