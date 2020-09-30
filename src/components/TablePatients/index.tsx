@@ -1,13 +1,14 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
 
 interface Patient {
   id: string;
   name: string;
   dateBirth: string;
   gender: string;
-  phone: string;
+  telephone: string;
 }
 
 interface TablePatientsProps {
@@ -31,9 +32,9 @@ const TablePatients: React.FC<TablePatientsProps> = ({ headers, rows }: TablePat
             <td>
               <Link to="/patient-detail">{item.name}</Link>
             </td>
-            <td>{item.dateBirth}</td>
-            <td>{item.gender}</td>
-            <td>{item.phone}</td>
+            <td>{format(new Date(item.dateBirth), 'dd-MM-yyyy')}</td>
+            <td>{item.gender === 'male' ? 'Masculino' : 'Feminno'}</td>
+            <td>{item.telephone}</td>
           </tr>
         ))}
       </tbody>
