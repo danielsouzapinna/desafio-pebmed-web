@@ -8,6 +8,9 @@ const AddPatient: React.FC = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -15,6 +18,7 @@ const AddPatient: React.FC = () => {
     }
 
     setValidated(true);
+    console.log('pinnA');
   };
 
   return (
