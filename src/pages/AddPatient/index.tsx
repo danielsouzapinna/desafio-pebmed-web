@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import MaskedInput from 'react-maskedinput';
 
 import API from '../../services/api';
+import Toast from '../../components/Toast';
 
 const AddPatient: React.FC = () => {
   const [validated, setValidated] = useState(false);
@@ -15,6 +16,8 @@ const AddPatient: React.FC = () => {
   const [gender, setGender] = useState('');
   const [weight, setWeight] = useState('');
   const [telephone, setTelephone] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [msgToast, setMsgToast] = useState('');
 
   const handleResetForm = (): void => {
     setName('');
@@ -26,6 +29,10 @@ const AddPatient: React.FC = () => {
     setValidated(false);
   };
 
+  const handleCloseToast = (): void => {
+    setShowToast(false);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     event.stopPropagation();
@@ -35,13 +42,28 @@ const AddPatient: React.FC = () => {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      const dateBirth = new Date(birth).toISOString();
+      const tempBirth = new Date(birth);
+      tempBirth.setDate(tempBirth.getDate() + 1);
+      const dateBirth = new Date(tempBirth).toISOString();
       const patient = { name, dateBirth, height, weight, gender, telephone };
 
-      API.post('patients', patient).then(result => {
-        console.log(result);
-        handleResetForm();
-      });
+      API.post('patients', patient)
+        .then(result => {
+          if (result.status === 201) {
+            setMsgToast('Paciente adicionado com sucesso.');
+            handleResetForm();
+            setShowToast(true);
+          } else {
+            console.log(result);
+            setMsgToast('Erro interno.');
+            setShowToast(true);
+          }
+          handleResetForm();
+        })
+        .catch(error => {
+          setMsgToast('Erro interno.');
+          setShowToast(true);
+        });
     }
 
     setValidated(true);
@@ -53,8 +75,10 @@ const AddPatient: React.FC = () => {
         <Col>
           <h1>Cadastro de Paciente</h1>
         </Col>
+        <Col>
+          <Toast title="Atenção" text={msgToast} showToast={showToast} handleCloseToast={handleCloseToast} />
+        </Col>
       </Row>
-
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col}>
