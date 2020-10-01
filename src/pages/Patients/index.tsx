@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import TablePatients from '../../components/TablePatients';
 import API from '../../services/api';
+import Toast from '../../components/Toast';
 
 interface Patient {
   id: string;
@@ -18,24 +19,32 @@ interface Patient {
 const Patients: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const labels = ['Nome', 'Data Nascimento', 'Sexo', 'Telefone'];
+  const [showToast, setShowToast] = useState(false);
+  const [msgToast, setMsgToast] = useState('');
+
+  const handleCloseToast = (): void => {
+    setShowToast(false);
+  };
 
   useEffect(() => {
-    API.get('patients').then(result => {
-      setPatients(result.data);
-    });
+    API.get('patients')
+      .then(result => {
+        setPatients(result.data);
+      })
+      .catch(err => {
+        setMsgToast('Erro ao consultar pacientes.');
+        setShowToast(true);
+      });
   }, []);
-
-  const values = [
-    { id: '1', name: 'João', dateBirth: '99/99/9999', gender: 'Masculino', phone: '(99) 99999-9999' },
-    { id: '2', name: 'Pedro', dateBirth: '99/99/9999', gender: 'Masculino', phone: '(99) 99999-9999' },
-    { id: '3', name: 'Maria', dateBirth: '99/99/9999', gender: 'Masculino', phone: '(99) 99999-9999' },
-  ];
 
   return (
     <>
       <Row className="d-flex align-items-center my-3">
         <Col>
           <h1>Pacientes</h1>
+        </Col>
+        <Col>
+          <Toast title="Atenção" text={msgToast} showToast={showToast} handleCloseToast={handleCloseToast} />
         </Col>
         <Col>
           <Button as={Link} to="/add-patient" variant="outline-secondary" className="float-right">

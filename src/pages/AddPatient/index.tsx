@@ -54,14 +54,17 @@ const AddPatient: React.FC = () => {
             handleResetForm();
             setShowToast(true);
           } else {
-            console.log(result);
-            setMsgToast('Erro interno.');
+            setMsgToast('Erro ao processar dados.');
             setShowToast(true);
           }
           handleResetForm();
         })
         .catch(error => {
-          setMsgToast('Erro interno.');
+          if (error?.response?.status === 409) {
+            setMsgToast('Paciente já existe.');
+          } else {
+            setMsgToast('Erro interno.');
+          }
           setShowToast(true);
         });
     }
