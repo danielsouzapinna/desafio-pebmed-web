@@ -1,19 +1,36 @@
 /* eslint-disable prefer-const */
 import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
+import ModalPatient from '../../components/ModalPatient';
 import PatientInformation from '../../components/PatientInformation';
 import TableAppointmentsPatient from '../../components/TableAppointmentsPatient';
-import ModalPatient from '../../components/ModalPatient';
+import API from '../../services/api';
 
 const PatientDetail: React.FC = () => {
+  const { id } = useParams();
+  let history = useHistory();
   const [show, setShow] = useState(false);
+  const handleShow = () => setShow(!show);
+  const removePatient = () => {
+    console.log(id);
+    API.delete(`patients/${id}`)
+      .then(result => {
+        if (result.status === 204) {
+          handleShow();
+          history.push('/patients');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  console.log(id);
 
   let headers: Array<string> = ['Data', 'Atendimento'];
   let rows = [
@@ -69,7 +86,13 @@ const PatientDetail: React.FC = () => {
 
       <TableAppointmentsPatient headers={headers} rows={rows} />
 
-      <ModalPatient show title="Excluir Paciente" text="Tem certeza que deseja excluir o paciente" handleClose={handleClose} />
+      <ModalPatient
+        modalShow={show}
+        title="Excluir Paciente"
+        text="Tem certeza que deseja excluir o paciente"
+        action={removePatient}
+        handleClose={handleShow}
+      />
     </>
   );
 };
