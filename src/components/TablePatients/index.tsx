@@ -27,16 +27,22 @@ const TablePatients: React.FC<TablePatientsProps> = ({ headers, rows }: TablePat
         </tr>
       </thead>
       <tbody>
-        {rows.map((item: Patient) => (
-          <tr key={item.id}>
-            <td>
-              <Link to="/patient-detail">{item.name}</Link>
-            </td>
-            <td>{format(new Date(item.dateBirth), 'dd-MM-yyyy')}</td>
-            <td>{item.gender === 'male' ? 'Masculino' : 'Feminno'}</td>
-            <td>{item.telephone}</td>
+        {rows.length > 0 ? (
+          rows.map((item: Patient) => (
+            <tr key={item.id}>
+              <td>
+                <Link to={`/patient-detail/${item.id}`}>{item.name}</Link>
+              </td>
+              <td>{format(new Date(item.dateBirth), 'dd-MM-yyyy')}</td>
+              <td>{item.gender === 'male' ? 'Masculino' : 'Feminno'}</td>
+              <td>{item.telephone}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={4}>Sem pacientes</td>
           </tr>
-        ))}
+        )}
       </tbody>
     </Table>
   );
