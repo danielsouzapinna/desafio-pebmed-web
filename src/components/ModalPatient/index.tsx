@@ -1,30 +1,32 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalFooter from 'react-bootstrap/ModalFooter';
 
 interface ModalProps {
   title: string;
   text: string;
-  show: boolean;
+  modalShow: boolean;
   handleClose: () => void;
+  action: () => void;
 }
 
-const ModalPatient: React.FC<ModalProps> = ({ title, text, show, handleClose }: ModalProps) => {
+const ModalPatient: React.FC<ModalProps> = ({ title, text, modalShow, handleClose, action }: ModalProps) => {
   return (
-    <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter" centered>
-      <ModalHeader closeButton>
-        <ModalTitle id="contained-modal-title-vcenter">{title}</ModalTitle>
-      </ModalHeader>
-      <ModalBody>
+    <Modal show={modalShow} onHide={() => handleClose()} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <p>{text}</p>
-      </ModalBody>
-      <ModalFooter>
-        <Button onClick={handleClose}>Close</Button>
-      </ModalFooter>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" onClick={() => action()}>
+          Sim
+        </Button>
+        <Button variant="danger" onClick={() => handleClose()}>
+          Não
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };
