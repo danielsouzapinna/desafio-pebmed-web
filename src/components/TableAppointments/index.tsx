@@ -34,18 +34,16 @@ const TableAppointments: React.FC<TableAppointmentsProps> = ({ headers, rows }: 
     handleShowModal();
   };
 
-  const removeAppointment = (): void => {
-    API.delete(`appointments/${id}`)
+  const removeAppointment = async (): Promise<void> => {
+    await API.delete(`appointments/${id}`)
       .then(result => {
         if (result.status === 204) {
           const filteredAppointments = rows.filter(item => {
             return item.id !== id;
           });
-
           rows = filteredAppointments;
           history.push('/');
           history.push('/appointments');
-          handleShowModal();
         }
       })
       .catch(err => {
