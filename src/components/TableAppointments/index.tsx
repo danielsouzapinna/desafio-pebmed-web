@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 
-import ModalPatient from '../ModalPatient';
+import ConfirmationModal from '../ConfirmationModal';
 import API from '../../services/api';
 
 interface PatientDetail {
@@ -25,16 +25,16 @@ interface TableAppointmentsProps {
 
 const TableAppointments: React.FC<TableAppointmentsProps> = ({ headers, rows }: TableAppointmentsProps) => {
   const [id, setId] = useState('');
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(!show);
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = (): void => setShowModal(!showModal);
   const history = useHistory();
 
-  const handleDelete = (id: string) => {
-    setId(id);
-    handleShow();
+  const handleDelete = (idSelectedToDelete: string): void => {
+    setId(idSelectedToDelete);
+    handleShowModal();
   };
 
-  const removeAppointment = () => {
+  const removeAppointment = (): void => {
     API.delete(`appointments/${id}`)
       .then(result => {
         if (result.status === 204) {
@@ -45,7 +45,7 @@ const TableAppointments: React.FC<TableAppointmentsProps> = ({ headers, rows }: 
           rows = filteredAppointments;
           history.push('/');
           history.push('/appointments');
-          handleShow();
+          handleShowModal();
         }
       })
       .catch(err => {
@@ -78,7 +78,7 @@ const TableAppointments: React.FC<TableAppointmentsProps> = ({ headers, rows }: 
         </tbody>
       </Table>
 
-      <ModalPatient modalShow={show} title="Excluir Consulta" text="Tem certeza que deseja excluir a consulta?" action={removeAppointment} handleClose={handleShow} />
+      <ConfirmationModal modalShow={showModal} title="Excluir Consulta" text="Tem certeza que deseja excluir a consulta?" action={removeAppointment} handleClose={handleShowModal} />
     </>
   );
 };

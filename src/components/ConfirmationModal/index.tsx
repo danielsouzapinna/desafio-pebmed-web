@@ -10,7 +10,7 @@ interface ModalProps {
   action: () => void;
 }
 
-const ModalPatient: React.FC<ModalProps> = ({ title, text, modalShow, handleClose, action }: ModalProps) => {
+const ConfirmationModal: React.FC<ModalProps> = ({ title, text, modalShow, handleClose, action }: ModalProps) => {
   return (
     <Modal show={modalShow} onHide={() => handleClose()} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -31,4 +31,4 @@ const ModalPatient: React.FC<ModalProps> = ({ title, text, modalShow, handleClos
   );
 };
 
-export default ModalPatient;
+export default ConfirmationModal;

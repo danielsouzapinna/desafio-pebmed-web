@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 
 import MaskedInput from 'react-maskedinput';
 
-import ModalPatient from '../../components/ModalPatient';
+import ConfirmationModal from '../../components/ConfirmationModal';
 // import PatientInformation from '../../components/PatientInformation';
 import TableAppointmentsPatient from '../../components/TableAppointmentsPatient';
 import API from '../../services/api';
@@ -30,7 +30,7 @@ const PatientDetail: React.FC = () => {
 
   const [validated, setValidated] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -42,8 +42,8 @@ const PatientDetail: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [msgToast, setMsgToast] = useState('');
 
-  const handleEditForm = () => setEdit(!edit);
-  const handleShow = () => setShow(!show);
+  const handleEditForm = (): void => setEdit(!edit);
+  const handleShowModal = (): void => setShowModal(!showModal);
 
   const handleCloseToast = (): void => {
     setShowToast(false);
@@ -65,7 +65,6 @@ const PatientDetail: React.FC = () => {
 
       API.put('patients', patient)
         .then(result => {
-          console.log(result);
           if (result.status === 200) {
             setMsgToast('Paciente Atualizado com sucesso.');
             setShowToast(true);
@@ -89,7 +88,6 @@ const PatientDetail: React.FC = () => {
   useEffect(() => {
     API.get(`patients/${id}`)
       .then(result => {
-        console.log(result);
         if (result.status === 200) {
           setName(result.data.name);
           let date = new Date(result.data.dateBirth);
@@ -110,10 +108,11 @@ const PatientDetail: React.FC = () => {
   }, []);
 
   const removePatient = () => {
+    console.log('entrou');
     API.delete(`patients/${id}`)
       .then(result => {
         if (result.status === 204) {
-          handleShow();
+          handleShowModal();
           history.push('/patients');
         }
       })
@@ -135,7 +134,7 @@ const PatientDetail: React.FC = () => {
             <Button variant="outline-secondary" className="mr-2" onClick={handleEditForm}>
               Editar Cadastro
             </Button>
-            <Button variant="outline-danger" onClick={handleShow}>
+            <Button variant="outline-danger" onClick={handleShowModal}>
               Excluir Cadastro
             </Button>
           </ButtonGroup>
@@ -278,7 +277,7 @@ const PatientDetail: React.FC = () => {
 
       <TableAppointmentsPatient headers={headers} rows={appointments} patientId={id} />
 
-      <ModalPatient modalShow={show} title="Excluir Paciente" text="Tem certeza que deseja excluir o paciente" action={removePatient} handleClose={handleShow} />
+      <ConfirmationModal modalShow={showModal} title="Excluir Paciente" text="Tem certeza que deseja excluir o paciente" action={removePatient} handleClose={handleShowModal} />
     </>
   );
 };
