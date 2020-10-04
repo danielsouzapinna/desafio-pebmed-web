@@ -100,16 +100,7 @@ const AddPatient: React.FC = () => {
 
           <Form.Group as={Col}>
             <Form.Label>Altura</Form.Label>
-            <Form.Control
-              as={MaskedInput}
-              mask="1.11"
-              name="height"
-              id="height"
-              value={height}
-              onChange={(e: any) => setHeight(e.target.value)}
-              required
-              placeholder="Altura (ex. 99,99)"
-            />
+            <Form.Control as={MaskedInput} mask="1,11" name="height" id="height" value={height} onChange={(e: any) => setHeight(e.target.value)} required placeholder="Altura (ex. 99,99)" />
             <Form.Control.Feedback type="invalid">Campo altura é obrigatório.</Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
@@ -129,7 +120,7 @@ const AddPatient: React.FC = () => {
             <Form.Label>Peso</Form.Label>
             <Form.Control
               as={MaskedInput}
-              mask="111.111"
+              mask="111,111"
               name="weight"
               id="weight"
               value={weight}
