@@ -31,6 +31,10 @@ interface ModalProps {
 }
 
 const UpdateModalAppointment: React.FC<ModalProps> = ({ title, modalShow, initialNote, appointment, close, actionInsert, actionUpdate }: ModalProps) => {
+  if (!initialNote) {
+    initialNote = '';
+  }
+
   const [appointmentNote, setAppointmentNote] = useState(initialNote);
   const [validatedForm, setValidatedForm] = useState(false);
 
