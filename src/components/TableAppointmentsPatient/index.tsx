@@ -1,12 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import format from 'date-fns/format';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 
 import API from '../../services/api';
 import UpdateModalAppointment from '../UpdateModalAppointment';
@@ -35,6 +33,7 @@ const TableAppointmentsPatient: React.FC<TableAppointmentsPatientProps> = ({ hea
   const [showModal, setShowModal] = useState(false);
   const [appointmentNote, setAppointmentNote] = useState('');
   const [appointmentSelected, setAppointmentSelected] = useState<Appointment>();
+  const history = useHistory();
 
   const handleShowModal = (): void => {
     setAppointmentNote('');
@@ -46,6 +45,8 @@ const TableAppointmentsPatient: React.FC<TableAppointmentsPatientProps> = ({ hea
       .then(result => {
         if (result.status === 200) {
           setShowModal(!showModal);
+          history.push(`/`);
+          history.push(`/patient-detail/${patientId}`);
         } else {
           console.log(result);
         }
